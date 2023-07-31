@@ -15,11 +15,11 @@ public class SalaryHistory
 
     public DateTime Date { get; set; }
 
-    public int Salary { get; set; }
+    public double Salary { get; set; }
 
-    public int Augment { get; set; }
+    public double Augment { get; set; }
 
-    public SalaryHistory(int idEmployee, DateTime date, int salary, int augment)
+    public SalaryHistory(int idEmployee, DateTime date, double salary, double augment)
     {
         this.IdEmployee = idEmployee;
         this.Date = date;

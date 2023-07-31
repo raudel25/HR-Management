@@ -96,4 +96,47 @@ public class EmployeeController : ControllerBase
 
         return Ok();
     }
+
+    [HttpPut("salary/{id:int}")]
+    public IActionResult UpdateSalary(int id)
+    {
+        var salary = this._context.SalaryHistories.Where(e => e.IdEmployee == id).OrderByDescending(e => e.Date)
+            .SingleOrDefault();
+
+        if (salary is null) return BadRequest();
+
+        var rolls = this._context.EmployeeRolls.Where(e => e.IdEmployee == id).Select(e => e.Roll).ToList();
+
+        var m = (DateTime.Now.Year - salary.Date.Year) * 12 + DateTime.Now.Month - salary.Date.Month;
+        double s = 0;
+
+        foreach (var r in rolls)
+        {
+            var ind = m / r.PeriodMoths;
+            if (ind == 0) continue;
+
+            s += Math.Pow(r.Augment / 100, ind);
+        }
+
+        if (s == 0) return Ok(new { augmetn = s, salary = salary.Salary });
+
+        var newS = salary.Salary * (1 + s);
+
+        var upSalary = new SalaryHistory(id, DateTime.Now, newS, s);
+
+        this._context.SalaryHistories.Add(upSalary);
+        this._context.SaveChanges();
+
+        return Ok(new { augmetn = s, salary = newS });
+    }
+
+    [HttpPut("salary")]
+    public IActionResult UpdateSalary()
+    {
+        var employees = this._context.Employees.Select(e => e.Id).ToList();
+
+        var _ = employees.Select(UpdateSalary);
+
+        return Ok();
+    }
 }

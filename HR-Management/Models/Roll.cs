@@ -13,9 +13,9 @@ public class Roll
 
     public int PeriodMoths { get; set; }
 
-    public int Augment { get; set; }
+    public double Augment { get; set; }
 
-    public Roll(string name, int periodMoths, int augment)
+    public Roll(string name, int periodMoths, double augment)
     {
         this.Name = name;
         this.PeriodMoths = periodMoths;

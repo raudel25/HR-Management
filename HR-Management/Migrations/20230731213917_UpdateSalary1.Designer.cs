@@ -3,6 +3,7 @@ using System;
 using HR_Management.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HR_Management.Migrations
 {
     [DbContext(typeof(HHRRContext))]
-    partial class HHRRContextModelSnapshot : ModelSnapshot
+    [Migration("20230731213917_UpdateSalary1")]
+    partial class UpdateSalary1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

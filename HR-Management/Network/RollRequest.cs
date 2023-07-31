@@ -8,7 +8,7 @@ public class RollRequest
 
     public int PeriodMoths { get; set; }
 
-    public int Augment { get; set; }
+    public double Augment { get; set; }
 
     public Roll Roll() => new Roll(this.Name, this.PeriodMoths, this.Augment);
 }
