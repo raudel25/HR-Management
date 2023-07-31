@@ -9,9 +9,16 @@ public class Roll
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
-    public string Name { get; set; } = null!;
+    public string Name { get; set; }
 
     public int PeriodMoths { get; set; }
 
     public int Augment { get; set; }
+
+    public Roll(string name, int periodMoths, int augment)
+    {
+        this.Name = name;
+        this.PeriodMoths = periodMoths;
+        this.Augment = augment;
+    }
 }

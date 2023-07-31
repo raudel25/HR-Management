@@ -7,7 +7,7 @@ using HR_Management.Services;
 namespace HR_Management.Controllers;
 
 [ApiController]
-[Route("employee")]
+[Route("[controller]")]
 public class EmployeeController : ControllerBase
 {
     private readonly HHRRContext _context;
@@ -64,7 +64,7 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
-    public ActionResult<Employee> Delete(int id)
+    public IActionResult Delete(int id)
     {
         var employee = this._context.Employees.SingleOrDefault(e => e.Id == id);
 
@@ -73,6 +73,6 @@ public class EmployeeController : ControllerBase
         this._context.Employees.Remove(employee);
         this._context.SaveChanges();
 
-        return employee;
+        return  Ok();
     }
 }
