@@ -17,7 +17,7 @@ var connectionString = configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<HHRRContext>(options =>
     options.UseMySQL(connectionString!));
 
-
+builder.Services.AddScoped<Salaries>();
 // Add services to the container.
 
 builder.Services.AddControllers();
