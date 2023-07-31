@@ -36,7 +36,7 @@ public class RollController : ControllerBase
     public ActionResult<Roll> Post(RollRequest request)
     {
         var r = this._context.Rolls.SingleOrDefault(r => r.Name == request.Name);
-        if (r is null) return BadRequest();
+        if (r is not null) return BadRequest();
 
         var roll = request.Roll();
 

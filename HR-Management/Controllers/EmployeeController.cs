@@ -82,4 +82,18 @@ public class EmployeeController : ControllerBase
 
         return Ok();
     }
+
+    [HttpPost("{idE:int}/roll/{idR:int}")]
+    public IActionResult AddRoll(int idE, int idR)
+    {
+        var e = this._context.Employees.SingleOrDefault(e => e.Id == idE);
+        var r = this._context.Rolls.SingleOrDefault(r => r.Id == idR);
+
+        if (e is null || r is null) return NotFound();
+
+        this._context.EmployeeRolls.Add(new EmployeeRoll(idE, idR));
+        this._context.SaveChanges();
+
+        return Ok();
+    }
 }
