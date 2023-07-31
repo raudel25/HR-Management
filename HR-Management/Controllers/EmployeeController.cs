@@ -22,7 +22,7 @@ public class EmployeeController : ControllerBase
     {
         return this._context.Employees.ToList();
     }
-    
+
     [HttpGet("{id:int}")]
     public ActionResult<Employee> Get(int id)
     {
@@ -35,6 +35,9 @@ public class EmployeeController : ControllerBase
     [HttpPost]
     public ActionResult<Employee> Post(CreateEmployee request)
     {
+        var e = _context.Employees.SingleOrDefault(e => e.Name == request.Name && e.LastName == request.LastName);
+        if (e is not null) return BadRequest();
+
         var employee = request.Employee();
 
         this._context.Employees.Add(employee);
@@ -52,10 +55,14 @@ public class EmployeeController : ControllerBase
         var employee = request.Employee();
         employee.Id = id;
 
-        var e = this._context.Employees.SingleOrDefault(e => e.Id == id);
-        if (e is null) return NotFound();
+        var e1 = this._context.Employees.SingleOrDefault(e => e.Id == id);
+        if (e1 is null) return NotFound();
 
-        _context.Entry(e).State = EntityState.Detached;
+        var e2 = _context.Employees.SingleOrDefault(e =>
+            e.Name == request.Name && e.LastName == request.LastName && e.Id != id);
+        if (e2 is not null) return BadRequest();
+
+        _context.Entry(e1).State = EntityState.Detached;
 
         this._context.Employees.Update(employee);
         this._context.SaveChanges();
@@ -73,6 +80,6 @@ public class EmployeeController : ControllerBase
         this._context.Employees.Remove(employee);
         this._context.SaveChanges();
 
-        return  Ok();
+        return Ok();
     }
 }
