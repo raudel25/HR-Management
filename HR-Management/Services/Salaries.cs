@@ -25,21 +25,16 @@ public class Salaries : ISalaries
             .ToListAsync();
 
         if (salaries.Count == 0) return false;
-
-        Console.WriteLine("aaaa");
-
+        
         var salary = salaries[0];
 
         var rolls = await this._context.EmployeeRolls.Where(e => e.IdEmployee == id).Select(e => e.Roll).ToListAsync();
 
         var m = (DateTime.Now.Year - salary.Date.Year) * 12 + DateTime.Now.Month - salary.Date.Month;
         double s = 0;
-
-        Console.WriteLine(salary.Date.Month);
-
+        
         foreach (var r in rolls)
         {
-            Console.WriteLine((r.PeriodMoths, r.Augment, m));
             var ind = m / r.PeriodMoths;
             if (ind == 0) continue;
 
