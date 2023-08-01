@@ -3,7 +3,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HR_Management.Services;
 
-public class Salaries
+public interface ISalaries
+{
+    public Task<bool> UpdateSalary(int id);
+
+    public Task UpdateSalary();
+}
+
+public class Salaries : ISalaries
 {
     private readonly HRContext _context;
 
@@ -18,7 +25,7 @@ public class Salaries
             .ToListAsync();
 
         if (salaries.Count == 0) return false;
-        
+
         Console.WriteLine("aaaa");
 
         var salary = salaries[0];
@@ -27,12 +34,12 @@ public class Salaries
 
         var m = (DateTime.Now.Year - salary.Date.Year) * 12 + DateTime.Now.Month - salary.Date.Month;
         double s = 0;
-        
+
         Console.WriteLine(salary.Date.Month);
 
         foreach (var r in rolls)
         {
-            Console.WriteLine((r.PeriodMoths,r.Augment,m));
+            Console.WriteLine((r.PeriodMoths, r.Augment, m));
             var ind = m / r.PeriodMoths;
             if (ind == 0) continue;
 

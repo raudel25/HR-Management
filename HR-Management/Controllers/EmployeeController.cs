@@ -11,9 +11,9 @@ namespace HR_Management.Controllers;
 public class EmployeeController : ControllerBase
 {
     private readonly HRContext _context;
-    private readonly Salaries _salaries;
+    private readonly ISalaries _salaries;
 
-    public EmployeeController(HRContext context, Salaries salaries)
+    public EmployeeController(HRContext context, ISalaries salaries)
     {
         this._context = context;
         this._salaries = salaries;
