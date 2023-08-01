@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HR_Management.Migrations
 {
     [DbContext(typeof(HRContext))]
-    [Migration("20230801034353_Updated")]
-    partial class Updated
+    [Migration("20230801053534_Update")]
+    partial class Update
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -52,6 +52,50 @@ namespace HR_Management.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Employees");
+                });
+
+            modelBuilder.Entity("HR_Management.Models.EmployeeInfo", b =>
+                {
+                    b.Property<int>("IdEmployee")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdRoll")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Adders")
+                        .HasColumnType("longtext");
+
+                    b.Property<double>("Augment")
+                        .HasColumnType("double");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("InitDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("PeriodMoths")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Roll")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("IdEmployee", "IdRoll");
+
+                    b.ToTable("EmployeeInfos");
                 });
 
             modelBuilder.Entity("HR_Management.Models.EmployeeRoll", b =>

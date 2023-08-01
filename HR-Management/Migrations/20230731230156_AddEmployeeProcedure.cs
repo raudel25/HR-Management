@@ -15,7 +15,7 @@ namespace HR_Management.Migrations
             migrationBuilder.Sql(@"
         CREATE PROCEDURE GetAllEmployees()
         BEGIN
-            SELECT e.Id as IdEmployee, r.Id as IdRoll, e.Name, e.LastName, e.Email, e.Adders, e.InitDate, r.Name as Roll, r.PeriodMoths, r.Augment
+            SELECT e.Id as IdEmployee, r.Id as IdRoll, e.Name, e.LastName, e.Email, e.Phone, e.Adders, e.InitDate, r.Name as Roll, r.PeriodMoths, r.Augment
             FROM Employees as e
             INNER JOIN EmployeeRolls as evr ON e.Id = evr.IdEmployee
             INNER JOIN Rolls as r ON evr.IdRoll = r.Id;

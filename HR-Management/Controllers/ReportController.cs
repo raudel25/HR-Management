@@ -2,7 +2,6 @@ using HR_Management.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HR_Management.Services;
-using HR_Management.Network;
 
 namespace HR_Management.Controllers;
 
@@ -16,18 +15,11 @@ public class ReportController : ControllerBase
     {
         this._context = context;
     }
-
+    
     [HttpGet]
-    public IEnumerable<GetAllEmployees> GetAllEmployees()
+    public async Task<IEnumerable<EmployeeInfo>> GetAllEmployees()
     {
-        // try
-        // {
-            return _context.Database.SqlQuery<GetAllEmployees>($"CALL GetAllEmployees()").ToList();
-        // }
-        // catch (Exception)
-        // {
-        //     return new List<GetAllEmployees>();
-        // }
+        return await _context.EmployeeInfos.FromSql($"CALL GetAllEmployees()").ToListAsync();
     }
 
     [HttpGet("{id:int}")]
