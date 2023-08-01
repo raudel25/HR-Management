@@ -3,7 +3,6 @@ using System;
 using HR_Management.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,11 +10,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HR_Management.Migrations
 {
     [DbContext(typeof(HRContext))]
-    [Migration("20230731194730_EmployeerRolls")]
-    partial class EmployeerRolls
+    partial class HRContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,8 +72,8 @@ namespace HR_Management.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("Augment")
-                        .HasColumnType("int");
+                    b.Property<double>("Augment")
+                        .HasColumnType("double");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -96,8 +93,8 @@ namespace HR_Management.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("Augment")
-                        .HasColumnType("int");
+                    b.Property<double>("Augment")
+                        .HasColumnType("double");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime(6)");
@@ -105,8 +102,8 @@ namespace HR_Management.Migrations
                     b.Property<int>("IdEmployee")
                         .HasColumnType("int");
 
-                    b.Property<int>("Salary")
-                        .HasColumnType("int");
+                    b.Property<double>("Salary")
+                        .HasColumnType("double");
 
                     b.HasKey("Id");
 

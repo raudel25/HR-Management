@@ -2,10 +2,6 @@
 
 #nullable disable
 
-using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore;
-
 namespace HR_Management.Migrations
 {
     /// <inheritdoc />

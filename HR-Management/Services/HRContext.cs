@@ -4,7 +4,7 @@ using HR_Management.Models;
 
 namespace HR_Management.Services;
 
-public class HHRRContext : DbContext
+public class HRContext : DbContext
 {
     public DbSet<Employee> Employees { get; set; } = null!;
 
@@ -14,7 +14,7 @@ public class HHRRContext : DbContext
 
     public DbSet<EmployeeRoll> EmployeeRolls { get; set; } = null!;
 
-    public HHRRContext(DbContextOptions<HHRRContext> options)
+    public HRContext(DbContextOptions<HRContext> options)
         : base(options)
     {
     }

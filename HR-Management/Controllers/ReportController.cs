@@ -10,9 +10,9 @@ namespace HR_Management.Controllers;
 [Route("[controller]")]
 public class ReportController : ControllerBase
 {
-    private readonly HHRRContext _context;
+    private readonly HRContext _context;
 
-    public ReportController(HHRRContext context)
+    public ReportController(HRContext context)
     {
         this._context = context;
     }
@@ -20,12 +20,19 @@ public class ReportController : ControllerBase
     [HttpGet]
     public IEnumerable<GetAllEmployees> GetAllEmployees()
     {
-        return _context.Database.SqlQuery<GetAllEmployees>($"CALL GetAllEmployees()").ToList();
+        // try
+        // {
+            return _context.Database.SqlQuery<GetAllEmployees>($"CALL GetAllEmployees()").ToList();
+        // }
+        // catch (Exception)
+        // {
+        //     return new List<GetAllEmployees>();
+        // }
     }
-    
+
     [HttpGet("{id:int}")]
-    public IEnumerable<SalaryHistory> GetAllEmployees(int id)
+    public async Task<IEnumerable<SalaryHistory>> GetAllEmployees(int id)
     {
-        return _context.SalaryHistories.FromSql($"CALL GetSalaryHistory({id})").ToList();
+        return await _context.SalaryHistories.FromSql($"CALL GetSalaryHistory({id})").ToListAsync();
     }
 }

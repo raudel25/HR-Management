@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HR_Management.Migrations
 {
-    [DbContext(typeof(HHRRContext))]
+    [DbContext(typeof(HRContext))]
     [Migration("20230731213917_UpdateSalary1")]
     partial class UpdateSalary1
     {

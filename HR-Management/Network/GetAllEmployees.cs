@@ -5,8 +5,7 @@ public class GetAllEmployees
     public int IdEmployee { get; set; }
 
     public int IdRoll { get; set; }
-
-
+    
     public string Name { get; set; }
 
     public string LastName { get; set; }
