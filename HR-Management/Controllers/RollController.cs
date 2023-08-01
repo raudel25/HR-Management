@@ -27,7 +27,7 @@ public class RollController : ControllerBase
     public async Task<ActionResult<Roll>> Get(int id)
     {
         var roll = await this._context.Rolls.SingleOrDefaultAsync(e => e.Id == id);
-        if (roll is null) return NotFound();
+        if (roll is null) return NotFound(new { msg = "The roll not found" });
 
         return roll;
     }
@@ -35,10 +35,11 @@ public class RollController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Roll>> Post(RollRequest request)
     {
-        if (request.PeriodMoths == 0 || request.Augment == 0) return BadRequest();
-        
+        if (request.PeriodMoths == 0 || request.Augment == 0)
+            return BadRequest(new { msg = "The period of months or the augment cannot be 0" });
+
         var r = await this._context.Rolls.SingleOrDefaultAsync(r => r.Name == request.Name);
-        if (r is not null) return BadRequest();
+        if (r is not null) return BadRequest(new { msg = "The roll already exists" });
 
         var roll = request.Roll();
 
@@ -51,16 +52,17 @@ public class RollController : ControllerBase
     [HttpPut("{id:int}")]
     public async Task<ActionResult<Roll>> Put(int id, RollRequest request)
     {
-        if (request.PeriodMoths == 0 || request.Augment == 0) return BadRequest();
+        if (request.PeriodMoths == 0 || request.Augment == 0)
+            return BadRequest(new { msg = "The period of months or the augment cannot be 0" });
 
         var roll = request.Roll();
         roll.Id = id;
 
         var r1 = await this._context.Rolls.SingleOrDefaultAsync(e => e.Id == id);
-        if (r1 is null) return NotFound();
+        if (r1 is null) return NotFound(new { msg = "The roll not found" });
 
         var r2 = await this._context.Rolls.SingleOrDefaultAsync(r => r.Name == request.Name && r.Id != id);
-        if (r2 is not null) return BadRequest();
+        if (r2 is not null) return BadRequest(new { msg = "The roll already exists" });
 
         _context.Entry(r1).State = EntityState.Detached;
 
@@ -75,7 +77,7 @@ public class RollController : ControllerBase
     {
         var roll = await this._context.Rolls.SingleOrDefaultAsync(e => e.Id == id);
 
-        if (roll is null) return NotFound();
+        if (roll is null) return NotFound(new { msg = "The roll not found" });
 
         this._context.Rolls.Remove(roll);
         await this._context.SaveChangesAsync();

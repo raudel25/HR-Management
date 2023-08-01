@@ -29,7 +29,7 @@ public class EmployeeController : ControllerBase
     public async Task<ActionResult<Employee>> Get(int id)
     {
         var employee = await this._context.Employees.SingleOrDefaultAsync(e => e.Id == id);
-        if (employee is null) return NotFound();
+        if (employee is null) return NotFound(new { msg = "Employee not found" });
 
         return employee;
     }
@@ -39,7 +39,7 @@ public class EmployeeController : ControllerBase
     {
         var e = await _context.Employees.SingleOrDefaultAsync(e =>
             e.Name == request.Name && e.LastName == request.LastName);
-        if (e is not null) return BadRequest();
+        if (e is not null) return BadRequest(new { msg = "The employee already exists" });
 
         var employee = request.Employee();
 
@@ -59,11 +59,11 @@ public class EmployeeController : ControllerBase
         employee.Id = id;
 
         var e1 = await this._context.Employees.SingleOrDefaultAsync(e => e.Id == id);
-        if (e1 is null) return NotFound();
+        if (e1 is null) return NotFound(new { msg = "Employee not found" });
 
         var e2 = await _context.Employees.SingleOrDefaultAsync(e =>
             e.Name == request.Name && e.LastName == request.LastName && e.Id != id);
-        if (e2 is not null) return BadRequest();
+        if (e2 is not null) return BadRequest(new { msg = "The employee already exists" });
 
         _context.Entry(e1).State = EntityState.Detached;
 
@@ -78,7 +78,7 @@ public class EmployeeController : ControllerBase
     {
         var employee = await this._context.Employees.SingleOrDefaultAsync(e => e.Id == id);
 
-        if (employee is null) return NotFound();
+        if (employee is null) return NotFound(new { msg = "Employee not found" });
 
         this._context.Employees.Remove(employee);
         await this._context.SaveChangesAsync();
@@ -92,7 +92,7 @@ public class EmployeeController : ControllerBase
         var e = await this._context.Employees.SingleOrDefaultAsync(e => e.Id == idEmployee);
         var r = await this._context.Rolls.SingleOrDefaultAsync(r => r.Id == idRoll);
 
-        if (e is null || r is null) return NotFound();
+        if (e is null || r is null) return NotFound(new { msg = "Employee or roll not found" });
 
         this._context.EmployeeRolls.Add(new EmployeeRoll(idEmployee, idRoll));
         await this._context.SaveChangesAsync();
@@ -100,15 +100,15 @@ public class EmployeeController : ControllerBase
         return Ok();
     }
 
-    [HttpPut("salary/{id:int}")]
+    [HttpPost("salary/{id:int}")]
     public async Task<IActionResult> UpdateSalary(int id)
     {
         var ok = await this._salaries.UpdateSalary(id);
 
-        return ok ? Ok() : BadRequest();
+        return ok ? Ok() : NotFound(new { msg = "Employee not found" });
     }
 
-    [HttpPut("salary")]
+    [HttpPost("salary")]
     public async Task<IActionResult> UpdateSalary()
     {
         await this._salaries.UpdateSalary();
